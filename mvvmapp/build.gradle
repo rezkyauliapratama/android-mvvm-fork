@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.android.databinding'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaVersion
+        targetCompatibility rootProject.ext.javaVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    apt "com.android.databinding:compiler:${rootProject.ext.dataBindingVersion}"
+    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibraryVersion}"
+    compile "com.android.support:recyclerview-v7:${rootProject.ext.supportLibraryVersion}"
+
+    // dagger
+    compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
+    apt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
+    provided 'javax.annotation:javax.annotation-api:1.2'
+
+    testCompile 'junit:junit:4.12'
+}
